@@ -16,5 +16,5 @@ npm run dev
 ## Enviar requisição para esta rota
 
 ```
-http://localhost:3333/cep/`${cep}`
+http://localhost:3333/cep/00000000
 ```
