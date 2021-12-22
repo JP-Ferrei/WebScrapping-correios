@@ -1,5 +1,6 @@
 import express, { Request, Response } from 'express'
 import { enderecoPorCep } from './cep';
+import Endereco from './models/Endereco';
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.get('/cep/:cep', async (req:Request, res:Response)=> {
   const cep = req.params.cep;
   try{
     const endereco = await enderecoPorCep(cep)
+    
     res.send(endereco)
   }catch(e){
     res.status(404).send({error: e.message})
@@ -23,3 +25,7 @@ app.get('/cep/:cep', async (req:Request, res:Response)=> {
 app.listen(3333, () =>{
   console.log('servidor aberto na porta 3333');
 })
+
+export {
+  app
+}

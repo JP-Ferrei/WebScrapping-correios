@@ -1,6 +1,8 @@
+import Endereco from './models/Endereco';
+
 const puppeteer = require('puppeteer');
 
-const enderecoPorCep = async (cep:string) => {
+const enderecoPorCep = async (cep:string) :Promise<Endereco> => {
 	const browser = await puppeteer.launch();
 	const page = await browser.newPage();
  
@@ -17,14 +19,16 @@ const enderecoPorCep = async (cep:string) => {
 		}
   })
 
-  const endereco = await hr.json();
+  const res = await hr.json();
 	await browser.close();
 
-  if(endereco.mensagem == 'DADOS NAO ENCONTRADOS'){
+  if(res.mensagem == 'DADOS NAO ENCONTRADOS'){
     throw new Error('Cep não valido')
   }
 
-  return endereco.dados[0]
+  const endereco = new Endereco(res.dados[0])
+ 
+  return endereco
 };
 
 export {
